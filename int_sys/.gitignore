@@ -10,6 +10,7 @@
 # Exclude temporary and generated
 *$*
 Hlptopic.con
+VPITools*
 
 # Add git attributes
 !.gitattributes
