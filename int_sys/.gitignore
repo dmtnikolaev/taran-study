@@ -1,0 +1,15 @@
+# Ignore all files...
+*.*
+
+# But not prolog required files
+!**/*.res
+!**/*.pro
+!**/*.con
+!**/*.vpr
+
+# Exclude temporary and generated
+*$*
+Hlptopic.con
+
+# Add git attributes
+!.gitattributes
