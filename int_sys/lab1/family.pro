@@ -94,15 +94,15 @@ clauses
 		брат( X, Z ),
 		parent( Z, Y ).
 	дядя( X, Y ) :-
-		married( X, Y ),
-		тетя( Y, Z ).
+		married( X, Z ),
+		тетя( Z, Y ).
 		
 	тетя( X, Y ) :-
 		сестра( X, Z ),
 		parent( Z, Y ).
 	тетя( X, Y ) :-
-		married( X, Y ),
-		дядя( Y, Z ).
+		married( X, Z ),
+		дядя( Z, Y ).
 	
 	племянник( X, Y ) :- man( X ), дядя( Y, X ).
 	племянник( X, Y ) :- man( X ), тетя( Y, X ).
