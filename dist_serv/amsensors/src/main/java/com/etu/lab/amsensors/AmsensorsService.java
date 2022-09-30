@@ -3,30 +3,52 @@ package com.etu.lab.amsensors;
 import org.springframework.stereotype.Service;
 import com.etu.lab.amsensors.model.Amsensor;
 
-import java.util.Currency;
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AmsensorsService {
+    private final List<Amsensor> dataBase = new ArrayList<>();
 
-    public Amsensor getAmsensor() {
-        Amsensor amsensor = new Amsensor();
-        amsensor.setId(new Random().nextInt());
-        amsensor.setModelName("МА-795");
-        amsensor.setPrice(2300);
-        amsensor.setDetectionAngle(110);
-        amsensor.setDetectionDistance(10);
-        amsensor.setSirenSoundPressure(120);
-
-        return amsensor;
-    }
-
-    public String createAmsensor(Amsensor amsensor) {
-        String responceMessage = null;
-        if (amsensor != null) {
-            responceMessage = String.format("This is the post and the object is: %s", amsensor.toString());
+    public Amsensor readAmsensor(int id) throws Exception {
+        for (var a : dataBase) {
+            if (a.getId() == id) {
+                return a;
+            }
         }
 
-        return responceMessage;
+        throw new Exception("element with id '" + id + "' not found");
+    }
+
+    public void createAmsensor(Amsensor amsensor) throws Exception {
+        for (var a : dataBase) {
+            if (a.getId() == amsensor.getId())
+            {
+                throw new Exception("element with id '" + amsensor.getId() + "' already exists");
+            }
+        }
+
+        dataBase.add(amsensor);
+    }
+
+    public void updateAmsensor(Amsensor amsensor) throws Exception {
+        for (var a : dataBase) {
+            if (amsensor.getId() == a.getId())
+            {
+                dataBase.set(dataBase.indexOf(a), amsensor);
+            }
+        }
+
+        throw new Exception("element with id '" + amsensor.getId() + "' not found");
+    }
+
+    public Amsensor deleteAmsensor(int id) throws Exception {
+        for (var a : dataBase) {
+            if (a.getId() == id) {
+                dataBase.remove(a);
+                return a;
+            }
+        }
+        throw new Exception("element with id '" + id + "' not found");
     }
 }
