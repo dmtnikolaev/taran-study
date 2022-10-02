@@ -36,6 +36,7 @@ public class AmsensorsService {
             if (amsensor.getId() == a.getId())
             {
                 dataBase.set(dataBase.indexOf(a), amsensor);
+                return;
             }
         }
 
