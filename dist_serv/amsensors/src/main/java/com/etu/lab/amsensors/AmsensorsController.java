@@ -2,8 +2,11 @@ package com.etu.lab.amsensors;
 
 import com.etu.lab.amsensors.model.Amsensor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.Locale;
 
@@ -13,13 +16,29 @@ public class AmsensorsController {
     @Autowired
     private AmsensorsService amsensorsService;
 
+    @Autowired
+    private MessageSource messages;
+
     @GetMapping(value = "{id}")
-    public ResponseEntity<String> getAmsensor(
+    public ResponseEntity getAmsensor(
                 @PathVariable("id") int id,
                 @RequestHeader(value = "Accept-Language", required = false) Locale locale
-            ) {
+            ) throws Exception {
         try {
-            return ResponseEntity.ok(amsensorsService.readAmsensor(id, locale));
+            var amsensor = amsensorsService.readAmsensor(id, locale);
+            amsensor.add(linkTo(methodOn(AmsensorsController.class)
+                            .getAmsensor(id, locale))
+                            .withSelfRel(),
+                    linkTo(methodOn(AmsensorsController.class)
+                            .createAmsensor(amsensor, locale))
+                            .withRel(messages.getMessage("amsensors.hateoas.create", null, locale)),
+                    linkTo(methodOn(AmsensorsController.class)
+                            .putAmsensor(amsensor, locale))
+                            .withRel(messages.getMessage("amsensors.hateoas.update", null, locale)),
+                    linkTo(methodOn(AmsensorsController.class)
+                            .deleteAmsensor(id, locale))
+                            .withRel(messages.getMessage("amsensors.hateoas.delete", null, locale)));
+            return ResponseEntity.ok(amsensor);
         } catch (Exception e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }
