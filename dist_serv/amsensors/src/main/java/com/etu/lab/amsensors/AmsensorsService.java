@@ -17,10 +17,10 @@ public class AmsensorsService {
 
     private final List<Amsensor> dataBase = new ArrayList<>();
 
-    public String readAmsensor(int id, Locale locale) throws Exception {
+    public Amsensor readAmsensor(int id, Locale locale) throws Exception {
         for (var a : dataBase) {
             if (a.getId() == id) {
-                return a.toString();
+                return a;
             }
         }
 
