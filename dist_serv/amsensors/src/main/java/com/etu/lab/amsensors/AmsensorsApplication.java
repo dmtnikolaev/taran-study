@@ -8,12 +8,14 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.boot.actuate.info.InfoContributor;
 import org.springframework.boot.actuate.info.MapInfoContributor;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 
 import java.util.Locale;
 import java.util.Map;
 import java.util.HashMap;
 
 @SpringBootApplication
+@RefreshScope
 public class AmsensorsApplication {
     public static void main(String[] args) {
         SpringApplication.run(AmsensorsApplication.class, args);
