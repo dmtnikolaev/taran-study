@@ -1,6 +1,8 @@
 package com.etu.lab.amsensors;
 
 import com.etu.lab.amsensors.model.Amsensor;
+import com.etu.lab.amsensors.service.AmsensorsService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
@@ -82,4 +84,13 @@ public class AmsensorsController {
             return ResponseEntity.status(404).body(e.getMessage());
         }
     }
+
+    @DeleteMapping(value = "")
+    public ResponseEntity deleteAllAmsensors(
+                @RequestHeader(value = "Accept-Language", required = false) Locale locale
+            ) {
+        String responseMessage = amsensorsService.deleteAllAmsensors(locale);
+        return ResponseEntity.ok(responseMessage);
+    }
+
 }
