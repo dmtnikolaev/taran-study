@@ -37,6 +37,7 @@ public class Amsensor extends RepresentationModel<Amsensor> implements Serializa
     @Column(name = "price", nullable = false)
     private int price;
 
+    @Column(name = "comment")
     private String comment;
 
     public Amsensor withComment(String comment) {
