@@ -29,6 +29,7 @@ def first_task():
     cv2.imshow("window6",thresh)
 
     cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
     cv2.destroyAllWindows()
     # Tasks with apple.bpm image
@@ -73,6 +74,18 @@ def second_task():
 
     cv2.imshow("Sobel",grad)
 
+    # Scharr
+    grad_x = cv2.Scharr(image_gray, cv2.CV_16S, 1, 0, borderType=cv2.BORDER_DEFAULT)
+    grad_y = cv2.Scharr(image_gray, cv2.CV_16S, 0, 1,  borderType=cv2.BORDER_DEFAULT)
+    
+
+    abs_grad_x = cv2.convertScaleAbs(grad_x)
+    abs_grad_y = cv2.convertScaleAbs(grad_y)
+    cv2.imshow("Grad_x", abs_grad_x)
+    cv2.imshow("Grad_y",abs_grad_y)
+
+    grad = cv2.addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0)
+    cv2.imshow("Scharr",grad)
     # Laplasian
     kernel_size = 3
     laplas = cv2.Laplacian(image_gray, cv2.CV_16S, kernel_size)
@@ -85,7 +98,12 @@ def second_task():
     image_gray = cv2.cvtColor(image_blur, cv2.COLOR_BGR2GRAY)
     canny = cv2.Canny(image_gray,50,150)
     cv2.imshow("Canny",canny)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
+def third_task():
+    image = cv2.imread("image0.jpg")
+    cv2.imshow("Original", image)
     # Hough
     canny = cv2.Canny(image,65,195)
 
@@ -117,6 +135,7 @@ def second_task():
 def main():
      first_task()
      second_task()
+     third_task()
 
 if __name__ == "__main__":
     main()

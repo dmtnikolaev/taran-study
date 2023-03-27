@@ -19,11 +19,15 @@ def second_task():
     # using blur
     image_blur = cv2.blur(image, ksize) 
     cv2.imshow("Blur", image_blur)
+
+    image_box = cv2.boxFilter(src=image, ddepth=-1, ksize=ksize) 
+    cv2.imshow("Box filter", image_box)
     image_blurG = cv2.GaussianBlur(image, ksize, cv2.BORDER_DEFAULT) 
     cv2.imshow("GausanBlur", image_blurG)
     image_blurM = cv2.medianBlur(image, 15) 
     cv2.imshow("MedianBlur", image_blurM)
     cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 def third_task():
     image = cv2.imread("lena.jpg")
@@ -38,6 +42,7 @@ def third_task():
     res_img = cv2.resize(image, (int(h/2), int(w)), cv2.INTER_NEAREST)
     cv2.imshow("Resized",res_img)
     cv2.waitKey(0)
+    cv2.destroyAllWindows()
     
 def forth_task():
     image = cv2.imread("image1.jpg")
