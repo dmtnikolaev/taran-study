@@ -38,42 +38,13 @@ def second_task():
     cv2.imshow("image2", image)
     cv2.waitKey(0)
     # split
-    b,g,r = cv2.split(image)
+    split_img = cv2.split(image)
     # Displaying Blue channel image
-    cv2.imshow("Model Blue Image", b)
+    cv2.imshow("Model Blue Image", split_img[0])
     # Displaying Blue channel image
-    cv2.imshow("Model Green Image", g)
+    cv2.imshow("Model Green Image", split_img[1])
     # Displaying Blue channel image
-    cv2.imshow("Model Red Image", r)
-    cv2.waitKey(0)
-
-    # Построение гистограмм с помощью OpenCV
-
-    b_hist = cv2.calcHist(b,[0],None,[256],[0,256])
-    g_hist = cv2.calcHist(r, [1],None,[256],[0,256])
-    r_hist = cv2.calcHist(g, [2],None,[256],[0,256])
-
-    # Используем L1 - нормализацию
-    cv2.normalize(b_hist, b_hist, alpha=0, beta=255, norm_type=cv2.NORM_L1)
-    cv2.normalize(g_hist, g_hist, alpha=0, beta=255, norm_type=cv2.NORM_L1)
-    cv2.normalize(r_hist, r_hist, alpha=0, beta=255, norm_type=cv2.NORM_L1)
-
-    hist_w = 512
-    hist_h = 400
-    histImage = np.zeros((hist_h, hist_w, 3), dtype=np.uint8)
-    bin_w = int(round( hist_w/256 ))
-
-    for i in range(1, 256):
-        cv2.line(histImage, ( bin_w*(i-1), hist_h - int(b_hist[i-1]) ),
-                ( bin_w*(i), hist_h - int(b_hist[i]) ),
-                ( 255, 0, 0), thickness=2)
-        cv2.line(histImage, ( bin_w*(i-1), hist_h - int(g_hist[i-1]) ),
-                ( bin_w*(i), hist_h - int(g_hist[i]) ),
-                ( 0, 255, 0), thickness=2)
-        cv2.line(histImage, ( bin_w*(i-1), hist_h - int(r_hist[i-1]) ),
-                ( bin_w*(i), hist_h - int(r_hist[i]) ),
-                ( 0, 0, 255), thickness=2)
-    cv2.imshow('calcHist Norm_L1', histImage)
+    cv2.imshow("Model Red Image", split_img[2])
     cv2.waitKey(0)
 
     # Построение всех гистограмм по всем нормализациям
@@ -93,7 +64,7 @@ def second_task():
             ax1.plot(hist,color = color)
             ax1.set_ylabel('Not normalized')
 
-            cv2.normalize(hist, hist, alpha=0, beta=255, norm_type=j)
+            cv2.normalize(hist, hist, alpha=1, beta=0, norm_type=j)
 
             ax2.plot(hist,color = color)
             ax2.set_ylabel('Normalized')
@@ -134,8 +105,8 @@ def third_task():
 
 def main():
     # first_task()
-    # second_task()
-    third_task()
+    second_task()
+    # third_task()
 
 if __name__ == "__main__":
     main()
